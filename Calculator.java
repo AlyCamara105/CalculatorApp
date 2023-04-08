@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -15,10 +16,7 @@ public class Calculator {
 
             num1 = getFloat("Enter the first number", scan);
             num2 = getFloat("Enter the second number", scan);
-
-            System.out.println("Enter the operation");
-            operator = scan.nextLine();
-
+            operator = getOperator("Enter the operation", scan);
             result = getResult(num1, num2, operator);
             printResults(num1, num2, operator, result);
         }
@@ -44,7 +42,7 @@ public class Calculator {
 
     static float getFloat(String prompt, Scanner scan) {
         boolean excepted;
-        float num;
+        float num = 0;
 
         do {
             try {
@@ -56,7 +54,6 @@ public class Calculator {
                 checkToTerminate(scan.nextLine());
                 System.out.println("Input Invalid");
                 excepted = true;
-                num = 0;
             }
         } while(excepted);
         
@@ -67,5 +64,27 @@ public class Calculator {
         if (input.equals(sentinel)) {
             System.exit(0);
         }
+    }
+
+    static String getOperator(String prompt, Scanner scan) {
+        boolean operatorIsValid = false;
+        String[] validOperators = {"*", "/", "+", "-"};
+        String operator = "";
+
+        while(!operatorIsValid) {
+            System.out.println(prompt);
+            operator = scan.nextLine();
+            checkToTerminate(operator);
+            for(int i = 0; i < validOperators.length; i++) {
+                if (operator.equals(validOperators[i])) {
+                    operatorIsValid = true;
+                }
+            }
+            if(!operatorIsValid) {
+                System.out.println("Invalid Input");
+            }
+        }
+
+        return operator;
     }
 }
