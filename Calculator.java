@@ -21,19 +21,23 @@ public class Calculator {
 
             if (operand.equals("*")) {
                 result = num1 * num2;
-                System.out.println("The answer is: " + result);
+                printResults(num1, num2, operand, result);
             } else if (operand.equals("/")) {
                 result = num1 / num2;
-                System.out.println("The answer is: " + result);
+                printResults(num1, num2, operand, result);
             } else if (operand.equals("+")) {
                 result = num1 + num2;
-                System.out.println("The answer is: " + result);
+                printResults(num1, num2, operand, result);
             } else if (operand.equals("-")) {
                 result = num1 - num2;
-                System.out.println("" + num1 + " " + operand + " " + num2 + " is: " + result);
+                printResults(num1, num2, operand, result);
             }
-            System.out.println("Type \"continue\" to continue and anything else to stop");
+            System.out.println("Type \"continue\" to use the calculator one more time and anything else to stop");
             moveOn = scan.nextLine();
         }
+    }
+
+    static void printResults(float num1, float num2, String operand, float result) {
+        System.out.println("" + num1 + " " + operand + " " + num2 + " is: " + result);
     }
 }
