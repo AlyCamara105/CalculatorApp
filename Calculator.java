@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,6 +13,7 @@ public class Calculator {
 
         while (true) {
 
+            System.out.println("\n");
             num1 = getFloat("Enter the first number", scan);
             num2 = getFloat("Enter the second number", scan);
             operator = getOperator("Enter the operation", scan);
@@ -52,7 +52,7 @@ public class Calculator {
                 scan.nextLine();
             } catch(InputMismatchException exception) {
                 checkToTerminate(scan.nextLine());
-                System.out.println("Input Invalid");
+                System.out.println("\nInput Invalid\n");
                 excepted = true;
             }
         } while(excepted);
@@ -81,7 +81,7 @@ public class Calculator {
                 }
             }
             if(!operatorIsValid) {
-                System.out.println("Invalid Input");
+                System.out.println("\nInvalid Input\n");
             }
         }
 
