@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Calculator {
@@ -6,10 +7,24 @@ public class Calculator {
         Scanner scan = new Scanner(System.in);
         double num1, num2, result;
         String operator, moveOn = "continue";
+        int num1ExceptionState = 0, num2ExceptionState = 0;
 
         while (moveOn.equals("continue")) {
             System.out.println("Enter the first number");
-            num1 = scan.nextFloat();
+
+            do {
+                try {
+                    System.out.println("Get the number input...");
+                    num1ExceptionState = 0;
+                    num1 = scan.nextFloat();
+                    scan.nextLine();
+                } catch(InputMismatchException exception) {
+                    System.out.println("The number caught an exception");
+                    num1ExceptionState ++;
+                }
+            } while(num1ExceptionState == 1);
+
+            /* 
             scan.nextLine();
 
             System.out.println("Enter the second number");
@@ -21,6 +36,7 @@ public class Calculator {
 
             result = getResult(num1, num2, operator);
             printResults(num1, num2, operator, result);
+            */
 
             System.out.println("Type \"continue\" to use the calculator one more time and anything else to stop");
             moveOn = scan.nextLine();
