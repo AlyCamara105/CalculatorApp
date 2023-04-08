@@ -2,13 +2,16 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Calculator {
+    static String sentinel = "stop";
     
     public static void main(String [] args) {
         Scanner scan = new Scanner(System.in);
         double num1, num2, result;
-        String operator, moveOn = "continue";
+        String operator;
 
-        while (moveOn.equals("continue")) {
+        System.out.println("Input \"stop\" to exit the calculator");
+
+        while (true) {
 
             num1 = getFloat("Enter the first number", scan);
             num2 = getFloat("Enter the second number", scan);
@@ -18,9 +21,6 @@ public class Calculator {
 
             result = getResult(num1, num2, operator);
             printResults(num1, num2, operator, result);
-
-            System.out.println("Type \"continue\" to use the calculator one more time and anything else to stop");
-            moveOn = scan.nextLine();
         }
     }
 
@@ -51,15 +51,21 @@ public class Calculator {
                 System.out.println(prompt);
                 excepted = false;
                 num = scan.nextFloat();
+                scan.nextLine();
             } catch(InputMismatchException exception) {
+                checkToTerminate(scan.nextLine());
                 System.out.println("Input Invalid");
                 excepted = true;
                 num = 0;
-            } finally {
-                scan.nextLine();
             }
         } while(excepted);
         
         return num;
+    }
+
+    static void checkToTerminate(String input) {
+        if (input.equals(sentinel)) {
+            System.exit(0);
+        }
     }
 }
