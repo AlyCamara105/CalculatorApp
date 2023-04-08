@@ -7,26 +7,11 @@ public class Calculator {
         Scanner scan = new Scanner(System.in);
         double num1, num2, result;
         String operator, moveOn = "continue";
-        boolean num1Exception, num2Exception;
 
         while (moveOn.equals("continue")) {
-            do {
-                try {
-                    System.out.println("Enter the first number");
-                    num1Exception = false;
-                    num1 = scan.nextFloat();
-                } catch(InputMismatchException exception) {
-                    System.out.println("Input Invalid");
-                    num1Exception = true;
-                    num1 = 0;
-                } finally {
-                    scan.nextLine();
-                }
-            } while(num1Exception);
 
-            System.out.println("Enter the second number");
-            num2 = scan.nextFloat();
-            scan.nextLine();
+            num1 = getFloat("Enter the first number", scan);
+            num2 = getFloat("Enter the second number", scan);
 
             System.out.println("Enter the operation");
             operator = scan.nextLine();
@@ -55,5 +40,26 @@ public class Calculator {
         } else {
             return 0;
         }
+    }
+
+    static float getFloat(String prompt, Scanner scan) {
+        boolean excepted;
+        float num;
+
+        do {
+            try {
+                System.out.println(prompt);
+                excepted = false;
+                num = scan.nextFloat();
+            } catch(InputMismatchException exception) {
+                System.out.println("Input Invalid");
+                excepted = true;
+                num = 0;
+            } finally {
+                scan.nextLine();
+            }
+        } while(excepted);
+        
+        return num;
     }
 }
