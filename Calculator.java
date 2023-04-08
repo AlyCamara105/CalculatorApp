@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Calculator {
@@ -6,11 +7,22 @@ public class Calculator {
         Scanner scan = new Scanner(System.in);
         double num1, num2, result;
         String operator, moveOn = "continue";
+        boolean num1Exception, num2Exception;
 
         while (moveOn.equals("continue")) {
-            System.out.println("Enter the first number");
-            num1 = scan.nextFloat();
-            scan.nextLine();
+            do {
+                try {
+                    System.out.println("Enter the first number");
+                    num1Exception = false;
+                    num1 = scan.nextFloat();
+                } catch(InputMismatchException exception) {
+                    System.out.println("Input Invalid");
+                    num1Exception = true;
+                    num1 = 0;
+                } finally {
+                    scan.nextLine();
+                }
+            } while(num1Exception);
 
             System.out.println("Enter the second number");
             num2 = scan.nextFloat();
