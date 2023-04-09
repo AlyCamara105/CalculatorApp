@@ -9,7 +9,7 @@ public class Calculator {
         double num1, num2, result;
         String operator;
 
-        System.out.println("Instructions: \nInput \"stop\" to exit the calculator. Use *, /, +, -, ^ operators to calculate.");
+        System.out.println("Instructions: \nInput \"stop\" to exit the calculator. \nUse *, /, +, -, ^, % operators to calculate.");
 
         while(true) {
 
@@ -37,6 +37,8 @@ public class Calculator {
             return num1 - num2;
         } else if(operator.equals("^")) {
             return Math.pow(num1, num2);
+        } else if(operator.equals("%")) {
+            return num1%num2;
         } else {
             return 0;
         }
@@ -70,7 +72,7 @@ public class Calculator {
 
     static String getOperator(String prompt, Scanner scan) {
         boolean operatorIsValid = false;
-        String[] validOperators = {"*", "/", "+", "-", "^"};
+        String[] validOperators = {"*", "/", "+", "-", "^", "%"};
         String operator = "";
 
         while(!operatorIsValid) {
