@@ -2,11 +2,12 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Calculator {
-    static String sentinel = "stop";
+    static final String sentinel = "stop";
+    static boolean clear = false, history = false;
     
     public static void main(String [] args) {
         Scanner scan = new Scanner(System.in);
-        double num1, num2, result;
+        double num1, num2;
         String operator;
 
         System.out.println("Instructions:\nInput \"stop\" to exit the calculator.\nUse the following operators to use the calculator: *, /, +, -, ^, %, log.\nFor exponents the first number is the exponent base and the second number is the exponent.\nFor logarithms the first number is the number inputed in the logarithm and the second number is the log base.\nUse \"pi\" for pi and \"e\" for the e.");
@@ -17,34 +18,42 @@ public class Calculator {
             num1 = getDouble("Enter the first number", scan);
             num2 = getDouble("Enter the second number", scan);
             operator = getOperator("Enter the operation", scan);
-            result = getResult(num1, num2, operator);
-            printResults(num1, num2, operator, result);
+            printResults(num1, num2, operator, getResult(num1, num2, operator));
+            if(clear) {
+                clear = false;
+            }
         }
     }
 
     static void printResults(double num1, double num2, String operator, double result) {
-        if(operator.equals("log")) {
-            System.out.println(operator + " base " + num2 + " (" + num1 + ") is: " + result);
-        } else {
-            System.out.println("" + num1 + " " + operator + " " + num2 + " is: " + result);
+        if(!clear) {
+            if(operator.equals("log")) {
+                System.out.println(operator + " base " + num2 + " (" + num1 + ") is: " + result);
+            } else {
+                System.out.println("" + num1 + " " + operator + " " + num2 + " is: " + result);
+            }
         }
     }
 
     static double getResult(double num1, double num2, String operator) {
-        if(operator.equals("*")) {
-            return num1 * num2;
-        } else if(operator.equals("/")) {
-            return num1 / num2;
-        } else if(operator.equals("+")) {
-            return num1 + num2;
-        } else if(operator.equals("-")) {
-            return num1 - num2;
-        } else if(operator.equals("^")) {
-            return Math.pow(num1, num2);
-        } else if(operator.equals("%")) {
-            return num1%num2;
-        } else if(operator.equals("log")) {
-            return Math.log10(num1) / Math.log10(num2);
+        if(!clear) {
+            if(operator.equals("*")) {
+                return num1 * num2;
+            } else if(operator.equals("/")) {
+                return num1 / num2;
+            } else if(operator.equals("+")) {
+                return num1 + num2;
+            } else if(operator.equals("-")) {
+                return num1 - num2;
+            } else if(operator.equals("^")) {
+                return Math.pow(num1, num2);
+            } else if(operator.equals("%")) {
+                return num1%num2;
+            } else if(operator.equals("log")) {
+                return Math.log10(num1) / Math.log10(num2);
+            } else {
+                return 0.0;
+            }
         } else {
             return 0.0;
         }
@@ -56,15 +65,19 @@ public class Calculator {
 
         do {
             try {
-                System.out.println(prompt);
-                excepted = false;
-                num = scan.nextDouble();
-                scan.nextLine();
+                if(!clear) {
+                    excepted = false;
+                    System.out.println(prompt);
+                    num = scan.nextDouble();
+                    scan.nextLine();
+                }
             } catch(InputMismatchException exception) {
                 String input = scan.nextLine().toLowerCase();
                 checkToTerminate(input);
                 num = getMathSymbolValue(input);
-                if(num == 0.0) {
+                if(checkToClear(input)) {
+                    clear = true;
+                } else if(num == 0.0) {
                     System.out.println("\nInput Invalid\n");
                     excepted = true;
                 }
@@ -85,7 +98,7 @@ public class Calculator {
         String[] validOperators = {"*", "/", "+", "-", "^", "%", "log"};
         String operator = "";
 
-        while(!operatorIsValid) {
+        while(!operatorIsValid && !clear) {
             System.out.println(prompt);
             operator = scan.nextLine().toLowerCase();
             checkToTerminate(operator);
@@ -94,7 +107,9 @@ public class Calculator {
                     operatorIsValid = true;
                 }
             }
-            if(!operatorIsValid) {
+            if(checkToClear(operator)) {
+                clear = true;
+            } else if(!operatorIsValid) {
                 System.out.println("\nInvalid Input\n");
             }
         }
@@ -110,5 +125,9 @@ public class Calculator {
         } else {
             return 0.0;
         }
+    }
+
+    static boolean checkToClear(String input) {
+        return input.equals("clear");
     }
 }
