@@ -9,7 +9,7 @@ public class Calculator {
     static double num1, num2;
     
     public static void main(String [] args) {
-        System.out.println("Instructions:\nInput: \"stop\" to exit the calculator, \"clear\" to clear all previous inputs, and \"history\" to show previous calculations.\nUse the following operators to use the calculator: *, /, +, -, ^, %, log.\nFor exponents the first number is the exponent base and the second number is the exponent.\nFor logarithms the first number is the number inputed in the logarithm and the second number is the log base.\nUse \"pi\" for pi and \"e\" for the e.");
+        System.out.println("Instructions:\nInput: \"stop\" to exit the calculator, \"clear\" to clear all previous inputs, or \"history\" to show previous calculations.\nUse the following operators or functions to use the calculator: *, /, +, -, ^, %, log, sin, arcsin, cos, arcos, tan, arctan, abs, !.\nFor exponents the first number is the exponent base and the second number is the exponent.\nFor logarithms the first number is the number inputed in the logarithm and the second number is the logarithm base.\nUse \"pi\" for PI and \"e\" for the mathematical constant.");
 
         while(true) {
 
@@ -165,7 +165,7 @@ public class Calculator {
         String[] validInputs = {"expression", "operator"};
 
         while(!inputIsValid) {
-            System.out.println("Input \"expression\" to evaluate an expression and \"operator\" to use the operators");
+            System.out.println("Input \"expression\" to evaluate an expression or \"operator\" to use the operators");
             input = scan.nextLine().toLowerCase();
             checkToTerminate(input);
             if(checkToClear(input)) {
