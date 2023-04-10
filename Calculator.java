@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Calculator {
     static final String sentinel = "stop";
     static boolean clear = false, showHistory = false;
-    static String historyDefault = "\n", history = "\n";
+    static String historyDefault = "\nHistory:\n", history = "\nHistory:\n";
     
     public static void main(String [] args) {
         Scanner scan = new Scanner(System.in);
