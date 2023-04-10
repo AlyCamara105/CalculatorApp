@@ -3,29 +3,26 @@ import java.util.Scanner;
 
 public class Calculator {
     static final String sentinel = "stop";
-    static boolean clear = false, showHistory = false;
+    static boolean clear = false, showHistory = false, expressionMode = false;
     static String historyDefault = "\nHistory:\n", history = "\nHistory:\n";
     static final Scanner scan = new Scanner(System.in);
     static double num1, num2;
     static String operator;
     
     public static void main(String [] args) {
-
         System.out.println("Instructions:\nInput: \"stop\" to exit the calculator, \"clear\" to clear all previous inputs, and \"history\" to show previous calculations.\nUse the following operators to use the calculator: *, /, +, -, ^, %, log.\nFor exponents the first number is the exponent base and the second number is the exponent.\nFor logarithms the first number is the number inputed in the logarithm and the second number is the log base.\nUse \"pi\" for pi and \"e\" for the e.");
 
         while(true) {
 
             System.out.println("\n");
-            num1 = getDouble("Enter the first number");
-            num2 = getDouble("Enter the second number");
-            getOperator("Enter the operation");
-            printResults(getResult());
+            queryCalculatorUse();
+            printResults();
             if(clear) {
                 clear = false;
             }
             if(showHistory) {
                 if(history.equals(historyDefault)) {
-                    System.out.println("\nNo History.");
+                    System.out.println("\nNo History");
                 } else {
                     System.out.println(history);
                 }
@@ -34,13 +31,18 @@ public class Calculator {
         }
     }
 
-    static void printResults(double result) {
-        String output;
+    static void printResults() {
+        String output = "";
+        double result = getResult();
         if(!clear) {
-            if(operator.equals("log")) {
-                output = operator + " base " + num2 + " (" + num1 + ") is: " + result;
+            if(!expressionMode) {
+                if(operator.equals("log")) {
+                    output = operator + " base " + num2 + " (" + num1 + ") is: " + result;
+                } else {
+                    output = "" + num1 + " " + operator + " " + num2 + " is: " + result;
+                }
             } else {
-                output = "" + num1 + " " + operator + " " + num2 + " is: " + result;
+
             }
             history += output + "\n";
             System.out.println("\n" + output);
@@ -105,12 +107,12 @@ public class Calculator {
         }
     }
 
-    static void getOperator(String prompt) {
+    static void getOperator() {
         boolean operatorIsValid = false;
         String[] validOperators = {"*", "/", "+", "-", "^", "%", "log"};
 
         while(!operatorIsValid && !clear) {
-            System.out.println(prompt);
+            System.out.println("Input the operation");
             operator = scan.nextLine().toLowerCase();
             checkToTerminate(operator);
             for(int i = 0; i < validOperators.length; i++) {
@@ -145,5 +147,45 @@ public class Calculator {
             internalClear = true;
         }
         return internalClear;
+    }
+
+    static void useOperator() {
+        num1 = getDouble("Input the first number");
+        num2 = getDouble("Input the second number");
+        getOperator();
+    }
+
+    static void queryCalculatorUse() {
+        String input = "";
+        boolean inputIsValid = false;
+        String[] validInputs = {"expression", "operator"};
+
+        while(!inputIsValid) {
+            System.out.println("Input \"expression\" to evaluate an expression and \"operator\" to use the operators");
+            input = scan.nextLine().toLowerCase();
+            checkToTerminate(input);
+            if(checkToClear(input)) {
+                clear = true;
+                inputIsValid = true;
+            }
+            if(!clear) {
+                for(int i = 0; i < validInputs.length; i++) {
+                    if(input.equals(validInputs[i])) {
+                        inputIsValid = true;
+                    }
+                }
+                if(!inputIsValid) {
+                    System.out.println("\nInvalid Input\n");
+                }
+            }
+        }
+        if(!clear) {
+            if(input.equals("expression")) {
+                expressionMode = true;
+            } else {
+                expressionMode = false;
+                useOperator();
+            }
+        }
     }
 }
