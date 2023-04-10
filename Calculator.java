@@ -14,8 +14,8 @@ public class Calculator {
         while(true) {
 
             System.out.println("\n");
-            num1 = getFloat("Enter the first number", scan);
-            num2 = getFloat("Enter the second number", scan);
+            num1 = getDouble("Enter the first number", scan);
+            num2 = getDouble("Enter the second number", scan);
             operator = getOperator("Enter the operation", scan);
             result = getResult(num1, num2, operator);
             printResults(num1, num2, operator, result);
@@ -42,24 +42,28 @@ public class Calculator {
         } else if(operator.equals("log")) {
             return Math.log10(num1) / Math.log10(num2);
         } else {
-            return 0;
+            return 0.0;
         }
     }
 
-    static float getFloat(String prompt, Scanner scan) {
-        boolean excepted;
-        float num = 0;
+    static double getDouble(String prompt, Scanner scan) {
+        boolean excepted = false;
+        double num = 0.0;
 
         do {
             try {
                 System.out.println(prompt);
                 excepted = false;
-                num = scan.nextFloat();
+                num = scan.nextDouble();
                 scan.nextLine();
             } catch(InputMismatchException exception) {
-                checkToTerminate(scan.nextLine());
-                System.out.println("\nInput Invalid\n");
-                excepted = true;
+                String input = scan.nextLine();
+                checkToTerminate(input);
+                num = getMathSymbolValue(input);
+                if(num == 0.0) {
+                    System.out.println("\nInput Invalid\n");
+                    excepted = true;
+                }
             }
         } while(excepted);
         
@@ -92,5 +96,15 @@ public class Calculator {
         }
 
         return operator;
+    }
+
+    static double getMathSymbolValue(String input) {
+        if(input.equals("e")) {
+            return Math.E;
+        } else if(input.equals("pi")) {
+            return Math.PI;
+        } else {
+            return 0.0;
+        }
     }
 }
