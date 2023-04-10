@@ -31,24 +31,29 @@ public class Calculator {
     }
 
     static void printResults() {
-        String output = "";
         if(!clear) {
+            String output = "";
             if(!expressionMode) {
-                double result = getResult();
+                double result = getOperatorResult();
                 if(operator.equals("log")) {
                     output = operator + " base " + num2 + " (" + num1 + ") is: " + result;
                 } else {
                     output = "" + num1 + " " + operator + " " + num2 + " is: " + result;
                 }
             } else {
-
+                double result = getFunctionResult();
+                if(function.equals("!")) {
+                    output = "" + num1 + function + " is: " + result;
+                } else {
+                    output = function + "(" + num1 + ") is: " + result;
+                }
             }
             history += output + "\n";
             System.out.println("\n" + output);
         }
     }
 
-    static double getResult() {
+    static double getOperatorResult() {
         if(!clear) {
             if(operator.equals("*")) {
                 return num1 * num2;
@@ -191,6 +196,7 @@ public class Calculator {
 
     static void useExpression() {
         getFunction();
+        num1 = getDouble("Input the number");
     }
 
     static void getFunction() {
@@ -215,6 +221,32 @@ public class Calculator {
                     System.out.println("\nInvalid Input\n");
                 }
             }
+        }
+    }
+
+    static double getFunctionResult() {
+        if(function.equals("sin")) {
+            return Math.sin(num1);
+        } else if(function.equals("cos")) {
+            return Math.cos(num1);
+        } else if(function.equals("tan")) {
+            return Math.tan(num1);
+        } else if(function.equals("arcsin")) {
+            return Math.asin(num1);
+        } else if(function.equals("arccos")) {
+            return Math.acos(num1);
+        } else if(function.equals("atan")) {
+            return Math.atan(num1);
+        } else if(function.equals("abs")) {
+            return Math.abs(num1);
+        } else if(function.equals("!")) {
+            double result = num1;
+            for(double i = result; i > 1; i--) {
+                result *= (i - 1);
+            }
+            return result;
+        } else {
+            return 0.0;
         }
     }
 }
