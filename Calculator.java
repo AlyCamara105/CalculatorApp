@@ -9,7 +9,7 @@ public class Calculator {
         double num1, num2, result;
         String operator;
 
-        System.out.println("Instructions: \nInput \"stop\" to exit the calculator. \nUse *, /, +, -, ^, % operators to calculate.");
+        System.out.println("Instructions: \nInput \"stop\" to exit the calculator. \nUse *, /, +, -, ^, %, log operators to calculate. \nFor logarithms the first number is the number inputed in the logarithm and the second number is the log base.");
 
         while(true) {
 
@@ -39,6 +39,8 @@ public class Calculator {
             return Math.pow(num1, num2);
         } else if(operator.equals("%")) {
             return num1%num2;
+        } else if(operator.equals("log")) {
+            return Math.log10(num1) / Math.log10(num2);
         } else {
             return 0;
         }
@@ -72,7 +74,7 @@ public class Calculator {
 
     static String getOperator(String prompt, Scanner scan) {
         boolean operatorIsValid = false;
-        String[] validOperators = {"*", "/", "+", "-", "^", "%"};
+        String[] validOperators = {"*", "/", "+", "-", "^", "%", "log"};
         String operator = "";
 
         while(!operatorIsValid) {
