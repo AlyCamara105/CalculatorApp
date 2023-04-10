@@ -61,7 +61,7 @@ public class Calculator {
                 num = scan.nextDouble();
                 scan.nextLine();
             } catch(InputMismatchException exception) {
-                String input = scan.nextLine();
+                String input = scan.nextLine().toLowerCase();
                 checkToTerminate(input);
                 num = getMathSymbolValue(input);
                 if(num == 0.0) {
@@ -87,7 +87,7 @@ public class Calculator {
 
         while(!operatorIsValid) {
             System.out.println(prompt);
-            operator = scan.nextLine();
+            operator = scan.nextLine().toLowerCase();
             checkToTerminate(operator);
             for(int i = 0; i < validOperators.length; i++) {
                 if(operator.equals(validOperators[i])) {
