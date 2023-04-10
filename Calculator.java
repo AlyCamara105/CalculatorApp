@@ -3,14 +3,15 @@ import java.util.Scanner;
 
 public class Calculator {
     static final String sentinel = "stop";
-    static boolean clear = false, history = false;
+    static boolean clear = false, showHistory = false;
+    static String historyDefault = "\n", history = "\n";
     
     public static void main(String [] args) {
         Scanner scan = new Scanner(System.in);
         double num1, num2;
         String operator;
 
-        System.out.println("Instructions:\nInput: \"stop\" to exit the calculator and \"clear\" to clear all previous inputs.\nUse the following operators to use the calculator: *, /, +, -, ^, %, log.\nFor exponents the first number is the exponent base and the second number is the exponent.\nFor logarithms the first number is the number inputed in the logarithm and the second number is the log base.\nUse \"pi\" for pi and \"e\" for the e.");
+        System.out.println("Instructions:\nInput: \"stop\" to exit the calculator, \"clear\" to clear all previous inputs, and \"history\" to show previous calculations.\nUse the following operators to use the calculator: *, /, +, -, ^, %, log.\nFor exponents the first number is the exponent base and the second number is the exponent.\nFor logarithms the first number is the number inputed in the logarithm and the second number is the log base.\nUse \"pi\" for pi and \"e\" for the e.");
 
         while(true) {
 
@@ -22,16 +23,27 @@ public class Calculator {
             if(clear) {
                 clear = false;
             }
+            if(showHistory) {
+                if(history.equals(historyDefault)) {
+                    System.out.println("\nNo History.");
+                } else {
+                    System.out.println(history);
+                }
+                showHistory = false;
+            }
         }
     }
 
     static void printResults(double num1, double num2, String operator, double result) {
+        String output;
         if(!clear) {
             if(operator.equals("log")) {
-                System.out.println(operator + " base " + num2 + " (" + num1 + ") is: " + result);
+                output = operator + " base " + num2 + " (" + num1 + ") is: " + result;
             } else {
-                System.out.println("" + num1 + " " + operator + " " + num2 + " is: " + result);
+                output = "" + num1 + " " + operator + " " + num2 + " is: " + result;
             }
+            history += output + "\n";
+            System.out.println(output);
         }
     }
 
@@ -128,6 +140,13 @@ public class Calculator {
     }
 
     static boolean checkToClear(String input) {
-        return input.equals("clear");
+        boolean internalClear = false;
+        if(input.equals("history")) {
+            internalClear = true;
+            showHistory = true;
+        } else if(input.equals("clear")) {
+            internalClear = true;
+        }
+        return internalClear;
     }
 }
