@@ -23,7 +23,11 @@ public class Calculator {
     }
 
     static void printResults(double num1, double num2, String operator, double result) {
-        System.out.println("" + num1 + " " + operator + " " + num2 + " is: " + result);
+        if(operator.equals("log")) {
+            System.out.println(operator + " base " + num2 + " (" + num1 + ") is: " + result);
+        } else {
+            System.out.println("" + num1 + " " + operator + " " + num2 + " is: " + result);
+        }
     }
 
     static double getResult(double num1, double num2, String operator) {
