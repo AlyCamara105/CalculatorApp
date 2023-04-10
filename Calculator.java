@@ -4,10 +4,9 @@ import java.util.Scanner;
 public class Calculator {
     static final String sentinel = "stop";
     static boolean clear = false, showHistory = false, expressionMode = false;
-    static String historyDefault = "\nHistory:\n", history = "\nHistory:\n";
+    static String historyDefault = "\nHistory:\n", history = "\nHistory:\n", operator, function;
     static final Scanner scan = new Scanner(System.in);
     static double num1, num2;
-    static String operator;
     
     public static void main(String [] args) {
         System.out.println("Instructions:\nInput: \"stop\" to exit the calculator, \"clear\" to clear all previous inputs, and \"history\" to show previous calculations.\nUse the following operators to use the calculator: *, /, +, -, ^, %, log.\nFor exponents the first number is the exponent base and the second number is the exponent.\nFor logarithms the first number is the number inputed in the logarithm and the second number is the log base.\nUse \"pi\" for pi and \"e\" for the e.");
@@ -33,9 +32,9 @@ public class Calculator {
 
     static void printResults() {
         String output = "";
-        double result = getResult();
         if(!clear) {
             if(!expressionMode) {
+                double result = getResult();
                 if(operator.equals("log")) {
                     output = operator + " base " + num2 + " (" + num1 + ") is: " + result;
                 } else {
@@ -112,7 +111,7 @@ public class Calculator {
         String[] validOperators = {"*", "/", "+", "-", "^", "%", "log"};
 
         while(!operatorIsValid && !clear) {
-            System.out.println("Input the operation");
+            System.out.println("Input an operation");
             operator = scan.nextLine().toLowerCase();
             checkToTerminate(operator);
             for(int i = 0; i < validOperators.length; i++) {
@@ -182,9 +181,39 @@ public class Calculator {
         if(!clear) {
             if(input.equals("expression")) {
                 expressionMode = true;
+                useExpression();
             } else {
                 expressionMode = false;
                 useOperator();
+            }
+        }
+    }
+
+    static void useExpression() {
+        getFunction();
+    }
+
+    static void getFunction() {
+        String[] validFunctions = {"sin", "cos", "tan", "arcsin", "arccos", "arctan", "abs", "!"};
+        boolean functionIsValid = false;
+
+        while(!functionIsValid) {
+            System.out.println("Input a function");
+            function = scan.nextLine().toLowerCase();
+            checkToTerminate(function);
+            if(checkToClear(function)) {
+                clear = true;
+                functionIsValid = true;
+            }
+            if(!clear) {
+                for(int i = 0; i < validFunctions.length; i++) {
+                    if(function.equals(validFunctions[i])) {
+                        functionIsValid = true;
+                    }
+                }
+                if(!functionIsValid) {
+                    System.out.println("\nInvalid Input\n");
+                }
             }
         }
     }
