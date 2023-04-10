@@ -5,21 +5,21 @@ public class Calculator {
     static final String sentinel = "stop";
     static boolean clear = false, showHistory = false;
     static String historyDefault = "\nHistory:\n", history = "\nHistory:\n";
+    static final Scanner scan = new Scanner(System.in);
+    static double num1, num2;
+    static String operator;
     
     public static void main(String [] args) {
-        Scanner scan = new Scanner(System.in);
-        double num1, num2;
-        String operator;
 
         System.out.println("Instructions:\nInput: \"stop\" to exit the calculator, \"clear\" to clear all previous inputs, and \"history\" to show previous calculations.\nUse the following operators to use the calculator: *, /, +, -, ^, %, log.\nFor exponents the first number is the exponent base and the second number is the exponent.\nFor logarithms the first number is the number inputed in the logarithm and the second number is the log base.\nUse \"pi\" for pi and \"e\" for the e.");
 
         while(true) {
 
             System.out.println("\n");
-            num1 = getDouble("Enter the first number", scan);
-            num2 = getDouble("Enter the second number", scan);
-            operator = getOperator("Enter the operation", scan);
-            printResults(num1, num2, operator, getResult(num1, num2, operator));
+            num1 = getDouble("Enter the first number");
+            num2 = getDouble("Enter the second number");
+            getOperator("Enter the operation");
+            printResults(getResult());
             if(clear) {
                 clear = false;
             }
@@ -34,7 +34,7 @@ public class Calculator {
         }
     }
 
-    static void printResults(double num1, double num2, String operator, double result) {
+    static void printResults(double result) {
         String output;
         if(!clear) {
             if(operator.equals("log")) {
@@ -47,7 +47,7 @@ public class Calculator {
         }
     }
 
-    static double getResult(double num1, double num2, String operator) {
+    static double getResult() {
         if(!clear) {
             if(operator.equals("*")) {
                 return num1 * num2;
@@ -71,7 +71,7 @@ public class Calculator {
         }
     }
 
-    static double getDouble(String prompt, Scanner scan) {
+    static double getDouble(String prompt) {
         boolean excepted = false;
         double num = 0.0;
 
@@ -105,10 +105,9 @@ public class Calculator {
         }
     }
 
-    static String getOperator(String prompt, Scanner scan) {
+    static void getOperator(String prompt) {
         boolean operatorIsValid = false;
         String[] validOperators = {"*", "/", "+", "-", "^", "%", "log"};
-        String operator = "";
 
         while(!operatorIsValid && !clear) {
             System.out.println(prompt);
@@ -125,8 +124,6 @@ public class Calculator {
                 System.out.println("\nInvalid Input\n");
             }
         }
-
-        return operator;
     }
 
     static double getMathSymbolValue(String input) {
