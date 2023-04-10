@@ -9,7 +9,7 @@ public class Calculator {
         double num1, num2, result;
         String operator;
 
-        System.out.println("Instructions:\nInput \"stop\" to exit the calculator.\nUse the following operators to use the calculator: *, /, +, -, ^, %, log.\nFor exponents the first number is the exponent base and the second number is the exponent.\nFor logarithms the first number is the number inputed in the logarithm and the second number is the log base.");
+        System.out.println("Instructions:\nInput \"stop\" to exit the calculator.\nUse the following operators to use the calculator: *, /, +, -, ^, %, log.\nFor exponents the first number is the exponent base and the second number is the exponent.\nFor logarithms the first number is the number inputed in the logarithm and the second number is the log base.\nUse \"pi\" for pi and \"e\" for the e.");
 
         while(true) {
 
