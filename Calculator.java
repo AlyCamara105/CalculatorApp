@@ -43,7 +43,7 @@ public class Calculator {
                 output = "" + num1 + " " + operator + " " + num2 + " is: " + result;
             }
             history += output + "\n";
-            System.out.println(output);
+            System.out.println("\n" + output);
         }
     }
 
